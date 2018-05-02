@@ -16,8 +16,19 @@ public class Voiture {
 		return porte;
 	}
 
+	public Voiture(String porte, String fenetere) {
+		super();
+		this.porte = porte;
+		this.fenetere = fenetere;
+	}
+
 	public void setPorte(String porte) {
 		this.porte = porte;
+	}
+
+	@Override
+	public String toString() {
+		return "Voiture [porte=" + porte + ", fenetere=" + fenetere + "]";
 	}
 	
 	
