@@ -1,6 +1,6 @@
 package com.simo.entite;
 
-public class Car {
+public class Voiture {
 	private String porte;
 	private String fenetere;
 
@@ -16,8 +16,19 @@ public class Car {
 		return porte;
 	}
 
+	public Voiture(String porte, String fenetere) {
+		super();
+		this.porte = porte;
+		this.fenetere = fenetere;
+	}
+
 	public void setPorte(String porte) {
 		this.porte = porte;
+	}
+
+	@Override
+	public String toString() {
+		return "Voiture [porte=" + porte + ", fenetere=" + fenetere + "]";
 	}
 	
 	
