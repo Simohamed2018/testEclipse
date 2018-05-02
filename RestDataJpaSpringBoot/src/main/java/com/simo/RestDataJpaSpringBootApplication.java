@@ -1,0 +1,12 @@
+package com.simo;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class RestDataJpaSpringBootApplication {
+
+	public static void main(String[] args) {
+		SpringApplication.run(RestDataJpaSpringBootApplication.class, args);
+	}
+}

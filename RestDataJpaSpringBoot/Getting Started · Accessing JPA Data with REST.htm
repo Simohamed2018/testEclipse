@@ -1,0 +1,1015 @@
+<!DOCTYPE html>
+<html data-clipboard-buttons="" data-code-prettify="" data-code-sidebar="" data-hide-show-guide="" data-sts-import="" data-mobile-support="" data-search=""><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>Getting Started · Accessing JPA Data with REST</title>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1, minimum-scale=1, user-scalable=no" id="Viewport" name="viewport">
+<link rel="shortcut icon" type="image/x-icon" href="https://spring.io/img/favicon-ca31b78daf0dd9a106bbf3c6d87d4ec7.png">
+<link href="Getting%20Started%20%C2%B7%20Accessing%20JPA%20Data%20with%20REST_files/css.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" type="text/css" href="Getting%20Started%20%C2%B7%20Accessing%20JPA%20Data%20with%20REST_files/main-3c5a94af1d1c6bdc47f88243a4ca7803.css">
+<script type="text/javascript" async="" src="Getting%20Started%20%C2%B7%20Accessing%20JPA%20Data%20with%20REST_files/analytics.js"></script><script async="" src="Getting%20Started%20%C2%B7%20Accessing%20JPA%20Data%20with%20REST_files/gtm.js"></script><script src="Getting%20Started%20%C2%B7%20Accessing%20JPA%20Data%20with%20REST_files/system-eccc019329febb5a1b06bde008ca5614.js"></script><style></style>
+<script>
+    System.config({baseURL: "/bca84ab"});
+  </script>
+<script src="Getting%20Started%20%C2%B7%20Accessing%20JPA%20Data%20with%20REST_files/config-5a675c9cddea3a5f55b71416e67d47d6.js"></script>
+<script>
+      System.import('app/main.js')
+  </script>
+<meta content="7qGntFPD9lWAVCtUu5U77v4l68PsTHf6xpzgjQv2j2M" name="google-site-verification">
+
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+      j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+      'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-KZM7GF6');</script>
+
+<link rel="stylesheet" type="text/css" href="Getting%20Started%20%C2%B7%20Accessing%20JPA%20Data%20with%20REST_files/gsguide-cce08ab7a9f46db88819a14148e45bad.css">
+
+<meta property="og:title" content="Accessing JPA Data with REST">
+<meta property="og:image" content="/img/spring-by-pivotal-9066b55828deb3c10e27e609af322c40.png">
+<meta property="og:description" content="this guide is designed to get you productive as quickly as possible and using the latest Spring project releases and techniques as recommended by the Spring team">
+</head><body class="show-maven">
+
+<noscript><iframe height="0" src="https://www.googletagmanager.com/ns.html?id=GTM-KZM7GF6" style="display:none;visibility:hidden" width="0"></iframe></noscript>
+
+<script type="text/javascript">
+    // Work around Google font rendering issues in webkit browsers on Windows 7
+    if (navigator.userAgent.indexOf("NT 6.1") != -1) {
+      document.body.style.WebkitTextStroke = "0.5px";
+    }
+  </script>
+<div class="viewport">
+<header class="navbar header--navbar desktop-only">
+<div class="navbar-inner">
+<div class="container-fluid">
+<div class="spring-logo--container">
+<a class="spring-logo" href="https://spring.io/"><span></span></a>
+</div>
+<ul class="nav pull-right">
+<li class="navbar-link">
+<a href="https://spring.io/projects">Projects</a>
+</li>
+<li class="navbar-link active">
+<a href="https://spring.io/guides">Guides</a>
+</li>
+<li class="navbar-link">
+<a href="https://spring.io/blog">Blog</a>
+</li>
+<li class="navbar-link nav-search js-nav-search">
+<a>
+<i class="icon-search navbar-search--icon js-search-input-open"></i>
+<span class="search-input-close js-search-input-close">
+<i class="icon-remove"></i>
+</span>
+</a>
+</li>
+</ul>
+</div>
+</div>
+<div class="search-dropdown--container js-search-dropdown">
+<div class="container-fluid">
+<div class="search-form--container">
+<form action="/search" class="form-inline form-search" method="get">
+<input class="search-query search-form--form js-search-input" name="q" placeholder="Search for documentation, guides, and posts..." type="text">
+<button class="search-form--submit" type="submit"><i class="icon-search"></i></button>
+</form>
+</div>
+</div>
+</div>
+</header>
+<div>
+<div class="mobile-navigation--wrapper mobile-only">
+<div class="navigation-drawer--container">
+<div class="mobile-search--container">
+<form action="/search" class="form-inline form-search" method="get">
+<button class="search-form--submit" type="submit"><i class="icon-search"></i></button>
+<input class="search-query search-form--form js-search-input" name="q" placeholder="Search..." type="text">
+</form>
+</div>
+<div class="navigation-item-list">
+<div class="navbar-link">
+<a href="https://spring.io/">
+Home
+<i class="icon-chevron-right pull-right"></i>
+</a>
+</div>
+<div class="navbar-link">
+<a href="https://spring.io/docs">
+Docs
+<i class="icon-chevron-right pull-right"></i>
+</a>
+</div>
+<div class="navbar-link active">
+<a href="https://spring.io/guides">
+Guides
+<i class="icon-chevron-right pull-right"></i>
+</a>
+</div>
+<div class="navbar-link">
+<a href="https://spring.io/projects">
+Projects
+<i class="icon-chevron-right pull-right"></i>
+</a>
+</div>
+<div class="navbar-link">
+<a href="https://spring.io/blog">
+Blog
+<i class="icon-chevron-right pull-right"></i>
+</a>
+</div>
+<div class="navbar-link">
+<a href="https://spring.io/questions">
+Questions
+<i class="icon-chevron-right pull-right"></i>
+</a>
+</div>
+</div>
+</div>
+<div class="mobile-nav">
+<div class="nav-icon js-open-nav-drawer">
+<i class="icon-reorder"></i>
+</div>
+<div class="header-center-icon">
+<a href="https://spring.io/">
+<div class="icon icon-spring-logo-mobile"></div>
+</a>
+</div>
+</div>
+</div>
+</div>
+<div class="header--container"></div>
+<div class="container-fluid"></div>
+<div></div>
+<div class="container-fluid">
+<main class="main-body--wrapper">
+<div class="row-fluid">
+<div class="span8 mobile-left-pane">
+<div class="content--title desktop-only">Getting Started</div>
+<article class="content--container">
+<h1 class="title">Accessing JPA Data with REST</h1>
+<div class="article-body"><div class="paragraph">
+<p>This guide walks you through the process of creating an application that accesses relational JPA data through a <a href="https://spring.io/guides/gs/rest-hateoas">hypermedia-based</a> <a href="https://spring.io/understanding/REST">RESTful</a> front end.</p>
+</div>
+<div class="sect1">
+<h2 id="_what_you_ll_build">What you’ll build</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>You’ll build a Spring application that let’s you create and retrieve <code>Person</code> objects stored in a database using Spring Data REST. Spring Data REST takes the features of <a href="https://projects.spring.io/spring-hateoas">Spring HATEOAS</a> and <a href="https://projects.spring.io/spring-data-jpa">Spring Data JPA</a> and combines them together automatically.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tbody>
+<tr>
+<td class="icon"> <i class="fa icon-note" title="Note"></i> </td>
+<td class="content"> Spring Data REST also supports <a href="https://spring.io/guides/gs/accessing-neo4j-data-rest">Spring Data Neo4j</a>, <a href="https://spring.io/guides/gs/accessing-gemfire-data-rest">Spring Data Gemfire</a> and <a href="https://spring.io/guides/gs/accessing-mongodb-data-rest">Spring Data MongoDB</a> as backend data stores, but those are not part of this guide. </td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_what_you_ll_need">What you’ll need</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li> <p>About 15 minutes</p> </li>
+<li> <p>A favorite text editor or IDE</p> </li>
+<li> <p><a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html">JDK 1.8</a> or later</p> </li>
+<li> <p><a href="http://www.gradle.org/downloads">Gradle 4+</a> or <a href="https://maven.apache.org/download.cgi">Maven 3.2+</a></p> </li>
+<li> <p>You can also import the code straight into your IDE:</p>
+<div class="ulist">
+<ul>
+<li> <p><a href="https://spring.io/guides/gs/sts">Spring Tool Suite (STS)</a></p> </li>
+<li> <p><a href="https://spring.io/guides/gs/intellij-idea/">IntelliJ IDEA</a></p> </li>
+</ul>
+</div> </li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_how_to_complete_this_guide">How to complete this guide</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Like most Spring <a href="https://spring.io/guides">Getting Started guides</a>,
+ you can start from scratch and complete each step, or you can bypass 
+basic setup steps that are already familiar to you. Either way, you end 
+up with working code.</p>
+</div>
+<div class="paragraph">
+<p>To <strong>start from scratch</strong>, move on to <a href="#scratch">Build with Gradle</a>.</p>
+</div>
+<div class="paragraph">
+<p>To <strong>skip the basics</strong>, do the following:</p>
+</div>
+<div class="ulist">
+<ul>
+<li> <p><a href="https://github.com/spring-guides/gs-accessing-data-rest/archive/master.zip">Download</a> and unzip the source repository for this guide, or clone it using <a href="https://spring.io/understanding/Git">Git</a>: <code>git clone <a href="https://github.com/spring-guides/gs-accessing-data-rest.git" class="bare">https://github.com/spring-guides/gs-accessing-data-rest.git</a></code></p> </li>
+<li> <p>cd into <code>gs-accessing-data-rest/initial</code></p> </li>
+<li> <p>Jump ahead to <a href="#initial">Create a domain object</a>.</p> </li>
+</ul>
+</div>
+<div class="paragraph">
+<p><strong>When you’re finished</strong>, you can check your results against the code in <code>gs-accessing-data-rest/complete</code>.</p>
+</div>
+</div>
+</div>
+<div class="sect1 reveal-gradle">
+<h2 id="reveal-gradle">Build with Gradle</h2>
+<div class="sectionbody">
+</div>
+</div>
+<div class="sect1 use-gradle">
+<h2 id="scratch">Build with Gradle</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>First you set up a basic build script. You can use any build system 
+you like when building apps with Spring, but the code you need to work 
+with <a href="http://gradle.org/">Gradle</a> and <a href="https://maven.apache.org/">Maven</a> is included here. If you’re not familiar with either, refer to <a href="https://spring.io/guides/gs/gradle">Building Java Projects with Gradle</a> or <a href="https://spring.io/guides/gs/maven">Building Java Projects with Maven</a>.</p>
+</div>
+<div class="sect2">
+<h3 id="_create_the_directory_structure">Create the directory structure</h3>
+<div class="paragraph">
+<p>In a project directory of your choosing, create the following subdirectory structure; for example, with <code>mkdir -p src/main/java/hello</code> on *nix systems:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre class="prettyprint">└── src
+    └── main
+        └── java
+            └── hello</pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_create_a_gradle_build_file">Create a Gradle build file</h3>
+<div class="paragraph">
+<p>Below is the <a href="https://github.com/spring-guides/gs-accessing-data-rest/blob/master/initial/build.gradle">initial Gradle build file</a>.</p>
+</div>
+<div class="paragraph">
+<p><code>build.gradle</code></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<button class="copy-button snippet" id="copy-button-0" data-clipboard-target="#code-block-0"></button><pre class="prettyprint highlight" id="code-block-0"><code class="language-java" data-lang="java"><span class="pln">buildscript </span><span class="pun">{</span><span class="pln">
+    repositories </span><span class="pun">{</span><span class="pln">
+        mavenCentral</span><span class="pun">()</span><span class="pln">
+    </span><span class="pun">}</span><span class="pln">
+    dependencies </span><span class="pun">{</span><span class="pln">
+        classpath</span><span class="pun">(</span><span class="str">"org.springframework.boot:spring-boot-gradle-plugin:2.0.0.RELEASE"</span><span class="pun">)</span><span class="pln">
+    </span><span class="pun">}</span><span class="pln">
+</span><span class="pun">}</span><span class="pln">
+
+apply plugin</span><span class="pun">:</span><span class="pln"> </span><span class="str">'java'</span><span class="pln">
+apply plugin</span><span class="pun">:</span><span class="pln"> </span><span class="str">'eclipse'</span><span class="pln">
+apply plugin</span><span class="pun">:</span><span class="pln"> </span><span class="str">'idea'</span><span class="pln">
+apply plugin</span><span class="pun">:</span><span class="pln"> </span><span class="str">'org.springframework.boot'</span><span class="pln">
+apply plugin</span><span class="pun">:</span><span class="pln"> </span><span class="str">'io.spring.dependency-management'</span><span class="pln">
+
+bootJar </span><span class="pun">{</span><span class="pln">
+    baseName </span><span class="pun">=</span><span class="pln"> </span><span class="str">'gs-accessing-data-rest'</span><span class="pln">
+    version </span><span class="pun">=</span><span class="pln"> </span><span class="str">'0.1.0'</span><span class="pln">
+</span><span class="pun">}</span><span class="pln">
+
+repositories </span><span class="pun">{</span><span class="pln">
+    mavenCentral</span><span class="pun">()</span><span class="pln">
+</span><span class="pun">}</span><span class="pln">
+
+sourceCompatibility </span><span class="pun">=</span><span class="pln"> </span><span class="lit">1.8</span><span class="pln">
+targetCompatibility </span><span class="pun">=</span><span class="pln"> </span><span class="lit">1.8</span><span class="pln">
+
+dependencies </span><span class="pun">{</span><span class="pln">
+    compile</span><span class="pun">(</span><span class="str">"org.springframework.boot:spring-boot-starter-data-rest"</span><span class="pun">)</span><span class="pln">
+    compile</span><span class="pun">(</span><span class="str">"org.springframework.boot:spring-boot-starter-data-jpa"</span><span class="pun">)</span><span class="pln">
+    compile</span><span class="pun">(</span><span class="str">"com.h2database:h2"</span><span class="pun">)</span><span class="pln">
+    testCompile</span><span class="pun">(</span><span class="str">"org.springframework.boot:spring-boot-starter-test"</span><span class="pun">)</span><span class="pln">
+</span><span class="pun">}</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The <a href="https://docs.spring.io/spring-boot/docs/current/gradle-plugin/reference/html">Spring Boot gradle plugin</a> provides many convenient features:</p>
+</div>
+<div class="ulist">
+<ul>
+<li> <p>It collects all the jars on the classpath and builds a single, 
+runnable "über-jar", which makes it more convenient to execute and 
+transport your service.</p> </li>
+<li> <p>It searches for the <code>public static void main()</code> method to flag as a runnable class.</p> </li>
+<li> <p>It provides a built-in dependency resolver that sets the version number to match <a href="https://github.com/spring-projects/spring-boot/blob/master/spring-boot-project/spring-boot-dependencies/pom.xml">Spring Boot dependencies</a>. You can override any version you wish, but it will default to Boot’s chosen set of versions.</p> </li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1 reveal-maven">
+<h2 id="reveal-maven">Build with Maven</h2>
+<div class="sectionbody">
+</div>
+</div>
+<div class="sect1 use-maven">
+<h2 id="use-maven">Build with Maven</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>First you set up a basic build script. You can use any build system 
+you like when building apps with Spring, but the code you need to work 
+with <a href="https://maven.apache.org/">Maven</a> is included here. If you’re not familiar with Maven, refer to <a href="https://spring.io/guides/gs/maven">Building Java Projects with Maven</a>.</p>
+</div>
+<div class="sect2">
+<h3 id="_create_the_directory_structure_2">Create the directory structure</h3>
+<div class="paragraph">
+<p>In a project directory of your choosing, create the following subdirectory structure; for example, with <code>mkdir -p src/main/java/hello</code> on *nix systems:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre class="prettyprint">└── src
+    └── main
+        └── java
+            └── hello</pre>
+</div>
+</div>
+<div class="paragraph">
+<p><code>pom.xml</code></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<button class="copy-button snippet" id="copy-button-1" data-clipboard-target="#code-block-1"></button><pre class="prettyprint highlight" id="code-block-1"><code class="language-xml" data-lang="xml"><span class="pun">&lt;?</span><span class="pln">xml version</span><span class="pun">=</span><span class="str">"1.0"</span><span class="pln"> encoding</span><span class="pun">=</span><span class="str">"UTF-8"</span><span class="pun">?&gt;</span><span class="pln">
+</span><span class="tag">&lt;project</span><span class="pln"> </span><span class="atn">xmlns</span><span class="pun">=</span><span class="atv">"http://maven.apache.org/POM/4.0.0"</span><span class="pln"> </span><span class="atn">xmlns:xsi</span><span class="pun">=</span><span class="atv">"http://www.w3.org/2001/XMLSchema-instance"</span><span class="pln">
+         </span><span class="atn">xsi:schemaLocation</span><span class="pun">=</span><span class="atv">"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"</span><span class="tag">&gt;</span><span class="pln">
+    </span><span class="tag">&lt;modelVersion&gt;</span><span class="pln">4.0.0</span><span class="tag">&lt;/modelVersion&gt;</span><span class="pln">
+
+    </span><span class="tag">&lt;groupId&gt;</span><span class="pln">org.springframework</span><span class="tag">&lt;/groupId&gt;</span><span class="pln">
+    </span><span class="tag">&lt;artifactId&gt;</span><span class="pln">gs-accessing-data-rest</span><span class="tag">&lt;/artifactId&gt;</span><span class="pln">
+    </span><span class="tag">&lt;version&gt;</span><span class="pln">0.1.0</span><span class="tag">&lt;/version&gt;</span><span class="pln">
+
+    </span><span class="tag">&lt;parent&gt;</span><span class="pln">
+        </span><span class="tag">&lt;groupId&gt;</span><span class="pln">org.springframework.boot</span><span class="tag">&lt;/groupId&gt;</span><span class="pln">
+        </span><span class="tag">&lt;artifactId&gt;</span><span class="pln">spring-boot-starter-parent</span><span class="tag">&lt;/artifactId&gt;</span><span class="pln">
+        </span><span class="tag">&lt;version&gt;</span><span class="pln">2.0.0.RELEASE</span><span class="tag">&lt;/version&gt;</span><span class="pln">
+    </span><span class="tag">&lt;/parent&gt;</span><span class="pln">
+
+    </span><span class="tag">&lt;properties&gt;</span><span class="pln">
+        </span><span class="tag">&lt;java.version&gt;</span><span class="pln">1.8</span><span class="tag">&lt;/java.version&gt;</span><span class="pln">
+    </span><span class="tag">&lt;/properties&gt;</span><span class="pln">
+
+    </span><span class="tag">&lt;dependencies&gt;</span><span class="pln">
+        </span><span class="tag">&lt;dependency&gt;</span><span class="pln">
+            </span><span class="tag">&lt;groupId&gt;</span><span class="pln">org.springframework.boot</span><span class="tag">&lt;/groupId&gt;</span><span class="pln">
+            </span><span class="tag">&lt;artifactId&gt;</span><span class="pln">spring-boot-starter-data-rest</span><span class="tag">&lt;/artifactId&gt;</span><span class="pln">
+        </span><span class="tag">&lt;/dependency&gt;</span><span class="pln">
+        </span><span class="tag">&lt;dependency&gt;</span><span class="pln">
+            </span><span class="tag">&lt;groupId&gt;</span><span class="pln">org.springframework.boot</span><span class="tag">&lt;/groupId&gt;</span><span class="pln">
+            </span><span class="tag">&lt;artifactId&gt;</span><span class="pln">spring-boot-starter-data-jpa</span><span class="tag">&lt;/artifactId&gt;</span><span class="pln">
+        </span><span class="tag">&lt;/dependency&gt;</span><span class="pln">
+        </span><span class="tag">&lt;dependency&gt;</span><span class="pln">
+            </span><span class="tag">&lt;groupId&gt;</span><span class="pln">com.h2database</span><span class="tag">&lt;/groupId&gt;</span><span class="pln">
+            </span><span class="tag">&lt;artifactId&gt;</span><span class="pln">h2</span><span class="tag">&lt;/artifactId&gt;</span><span class="pln">
+        </span><span class="tag">&lt;/dependency&gt;</span><span class="pln">
+        </span><span class="tag">&lt;dependency&gt;</span><span class="pln">
+            </span><span class="tag">&lt;groupId&gt;</span><span class="pln">org.springframework.boot</span><span class="tag">&lt;/groupId&gt;</span><span class="pln">
+            </span><span class="tag">&lt;artifactId&gt;</span><span class="pln">spring-boot-starter-test</span><span class="tag">&lt;/artifactId&gt;</span><span class="pln">
+            </span><span class="tag">&lt;scope&gt;</span><span class="pln">test</span><span class="tag">&lt;/scope&gt;</span><span class="pln">
+        </span><span class="tag">&lt;/dependency&gt;</span><span class="pln">
+    </span><span class="tag">&lt;/dependencies&gt;</span><span class="pln">
+
+    </span><span class="tag">&lt;build&gt;</span><span class="pln">
+        </span><span class="tag">&lt;plugins&gt;</span><span class="pln">
+            </span><span class="tag">&lt;plugin&gt;</span><span class="pln">
+                </span><span class="tag">&lt;groupId&gt;</span><span class="pln">org.springframework.boot</span><span class="tag">&lt;/groupId&gt;</span><span class="pln">
+                </span><span class="tag">&lt;artifactId&gt;</span><span class="pln">spring-boot-maven-plugin</span><span class="tag">&lt;/artifactId&gt;</span><span class="pln">
+            </span><span class="tag">&lt;/plugin&gt;</span><span class="pln">
+        </span><span class="tag">&lt;/plugins&gt;</span><span class="pln">
+    </span><span class="tag">&lt;/build&gt;</span><span class="pln">
+
+    </span><span class="tag">&lt;repositories&gt;</span><span class="pln">
+        </span><span class="tag">&lt;repository&gt;</span><span class="pln">
+            </span><span class="tag">&lt;id&gt;</span><span class="pln">spring-releases</span><span class="tag">&lt;/id&gt;</span><span class="pln">
+            </span><span class="tag">&lt;url&gt;</span><span class="pln">https://repo.spring.io/libs-release</span><span class="tag">&lt;/url&gt;</span><span class="pln">
+        </span><span class="tag">&lt;/repository&gt;</span><span class="pln">
+    </span><span class="tag">&lt;/repositories&gt;</span><span class="pln">
+    </span><span class="tag">&lt;pluginRepositories&gt;</span><span class="pln">
+        </span><span class="tag">&lt;pluginRepository&gt;</span><span class="pln">
+            </span><span class="tag">&lt;id&gt;</span><span class="pln">spring-releases</span><span class="tag">&lt;/id&gt;</span><span class="pln">
+            </span><span class="tag">&lt;url&gt;</span><span class="pln">https://repo.spring.io/libs-release</span><span class="tag">&lt;/url&gt;</span><span class="pln">
+        </span><span class="tag">&lt;/pluginRepository&gt;</span><span class="pln">
+    </span><span class="tag">&lt;/pluginRepositories&gt;</span><span class="pln">
+</span><span class="tag">&lt;/project&gt;</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The <a href="https://docs.spring.io/spring-boot/docs/current/maven-plugin">Spring Boot Maven plugin</a> provides many convenient features:</p>
+</div>
+<div class="ulist">
+<ul>
+<li> <p>It collects all the jars on the classpath and builds a single, 
+runnable "über-jar", which makes it more convenient to execute and 
+transport your service.</p> </li>
+<li> <p>It searches for the <code>public static void main()</code> method to flag as a runnable class.</p> </li>
+<li> <p>It provides a built-in dependency resolver that sets the version number to match <a href="https://github.com/spring-projects/spring-boot/blob/master/spring-boot-project/spring-boot-dependencies/pom.xml">Spring Boot dependencies</a>. You can override any version you wish, but it will default to Boot’s chosen set of versions.</p> </li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1 reveal-sts">
+<h2 id="reveal-sts">Build with your IDE</h2>
+<div class="sectionbody">
+</div>
+</div>
+<div class="sect1 use-sts">
+<h2 id="use-sts">Build with your IDE</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li> <p>Read how to import this guide straight into <a href="https://spring.io/guides/gs/sts/">Spring Tool Suite</a>.</p> </li>
+<li> <p>Read how to work with this guide in <a href="https://spring.io/guides/gs/intellij-idea">IntelliJ IDEA</a>.</p> </li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="initial">Create a domain object</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Create a new domain object to present a person.</p>
+</div>
+<div class="paragraph">
+<p><code>src/main/java/hello/Person.java</code></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<button class="copy-button snippet" id="copy-button-2" data-clipboard-target="#code-block-2"></button><pre class="prettyprint highlight" id="code-block-2"><code class="language-java" data-lang="java"><span class="kwd">package</span><span class="pln"> hello</span><span class="pun">;</span><span class="pln">
+
+</span><span class="kwd">import</span><span class="pln"> javax</span><span class="pun">.</span><span class="pln">persistence</span><span class="pun">.</span><span class="typ">Entity</span><span class="pun">;</span><span class="pln">
+</span><span class="kwd">import</span><span class="pln"> javax</span><span class="pun">.</span><span class="pln">persistence</span><span class="pun">.</span><span class="typ">GeneratedValue</span><span class="pun">;</span><span class="pln">
+</span><span class="kwd">import</span><span class="pln"> javax</span><span class="pun">.</span><span class="pln">persistence</span><span class="pun">.</span><span class="typ">GenerationType</span><span class="pun">;</span><span class="pln">
+</span><span class="kwd">import</span><span class="pln"> javax</span><span class="pun">.</span><span class="pln">persistence</span><span class="pun">.</span><span class="typ">Id</span><span class="pun">;</span><span class="pln">
+
+</span><span class="lit">@Entity</span><span class="pln">
+</span><span class="kwd">public</span><span class="pln"> </span><span class="kwd">class</span><span class="pln"> </span><span class="typ">Person</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+
+	</span><span class="lit">@Id</span><span class="pln">
+	</span><span class="lit">@GeneratedValue</span><span class="pun">(</span><span class="pln">strategy </span><span class="pun">=</span><span class="pln"> </span><span class="typ">GenerationType</span><span class="pun">.</span><span class="pln">AUTO</span><span class="pun">)</span><span class="pln">
+	</span><span class="kwd">private</span><span class="pln"> </span><span class="kwd">long</span><span class="pln"> id</span><span class="pun">;</span><span class="pln">
+
+	</span><span class="kwd">private</span><span class="pln"> </span><span class="typ">String</span><span class="pln"> firstName</span><span class="pun">;</span><span class="pln">
+	</span><span class="kwd">private</span><span class="pln"> </span><span class="typ">String</span><span class="pln"> lastName</span><span class="pun">;</span><span class="pln">
+
+	</span><span class="kwd">public</span><span class="pln"> </span><span class="typ">String</span><span class="pln"> getFirstName</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+		</span><span class="kwd">return</span><span class="pln"> firstName</span><span class="pun">;</span><span class="pln">
+	</span><span class="pun">}</span><span class="pln">
+
+	</span><span class="kwd">public</span><span class="pln"> </span><span class="kwd">void</span><span class="pln"> setFirstName</span><span class="pun">(</span><span class="typ">String</span><span class="pln"> firstName</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+		</span><span class="kwd">this</span><span class="pun">.</span><span class="pln">firstName </span><span class="pun">=</span><span class="pln"> firstName</span><span class="pun">;</span><span class="pln">
+	</span><span class="pun">}</span><span class="pln">
+
+	</span><span class="kwd">public</span><span class="pln"> </span><span class="typ">String</span><span class="pln"> getLastName</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+		</span><span class="kwd">return</span><span class="pln"> lastName</span><span class="pun">;</span><span class="pln">
+	</span><span class="pun">}</span><span class="pln">
+
+	</span><span class="kwd">public</span><span class="pln"> </span><span class="kwd">void</span><span class="pln"> setLastName</span><span class="pun">(</span><span class="typ">String</span><span class="pln"> lastName</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+		</span><span class="kwd">this</span><span class="pun">.</span><span class="pln">lastName </span><span class="pun">=</span><span class="pln"> lastName</span><span class="pun">;</span><span class="pln">
+	</span><span class="pun">}</span><span class="pln">
+</span><span class="pun">}</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The <code>Person</code> has a first name and a last name. There is 
+also an id object that is configured to be automatically generated so 
+you don’t have to deal with that.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_create_a_person_repository">Create a Person repository</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Next you need to create a simple repository.</p>
+</div>
+<div class="paragraph">
+<p><code>src/main/java/hello/PersonRepository.java</code></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<button class="copy-button snippet" id="copy-button-3" data-clipboard-target="#code-block-3"></button><pre class="prettyprint highlight" id="code-block-3"><code class="language-java" data-lang="java"><span class="kwd">package</span><span class="pln"> hello</span><span class="pun">;</span><span class="pln">
+
+</span><span class="kwd">import</span><span class="pln"> java</span><span class="pun">.</span><span class="pln">util</span><span class="pun">.</span><span class="typ">List</span><span class="pun">;</span><span class="pln">
+
+</span><span class="kwd">import</span><span class="pln"> org</span><span class="pun">.</span><span class="pln">springframework</span><span class="pun">.</span><span class="pln">data</span><span class="pun">.</span><span class="pln">repository</span><span class="pun">.</span><span class="typ">PagingAndSortingRepository</span><span class="pun">;</span><span class="pln">
+</span><span class="kwd">import</span><span class="pln"> org</span><span class="pun">.</span><span class="pln">springframework</span><span class="pun">.</span><span class="pln">data</span><span class="pun">.</span><span class="pln">repository</span><span class="pun">.</span><span class="pln">query</span><span class="pun">.</span><span class="typ">Param</span><span class="pun">;</span><span class="pln">
+</span><span class="kwd">import</span><span class="pln"> org</span><span class="pun">.</span><span class="pln">springframework</span><span class="pun">.</span><span class="pln">data</span><span class="pun">.</span><span class="pln">rest</span><span class="pun">.</span><span class="pln">core</span><span class="pun">.</span><span class="pln">annotation</span><span class="pun">.</span><span class="typ">RepositoryRestResource</span><span class="pun">;</span><span class="pln">
+
+</span><span class="lit">@RepositoryRestResource</span><span class="pun">(</span><span class="pln">collectionResourceRel </span><span class="pun">=</span><span class="pln"> </span><span class="str">"people"</span><span class="pun">,</span><span class="pln"> path </span><span class="pun">=</span><span class="pln"> </span><span class="str">"people"</span><span class="pun">)</span><span class="pln">
+</span><span class="kwd">public</span><span class="pln"> </span><span class="kwd">interface</span><span class="pln"> </span><span class="typ">PersonRepository</span><span class="pln"> </span><span class="kwd">extends</span><span class="pln"> </span><span class="typ">PagingAndSortingRepository</span><span class="pun">&lt;</span><span class="typ">Person</span><span class="pun">,</span><span class="pln"> </span><span class="typ">Long</span><span class="pun">&gt;</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+
+	</span><span class="typ">List</span><span class="pun">&lt;</span><span class="typ">Person</span><span class="pun">&gt;</span><span class="pln"> findByLastName</span><span class="pun">(</span><span class="lit">@Param</span><span class="pun">(</span><span class="str">"name"</span><span class="pun">)</span><span class="pln"> </span><span class="typ">String</span><span class="pln"> name</span><span class="pun">);</span><span class="pln">
+
+</span><span class="pun">}</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This repository is an interface and will allow you to perform various operations involving <code>Person</code> objects. It gets these operations by extending the <a href="https://docs.spring.io/spring-data/commons/docs/current/api/org/springframework/data/repository/PagingAndSortingRepository.html">PagingAndSortingRepository</a> interface defined in Spring Data Commons.</p>
+</div>
+<div class="paragraph">
+<p>At runtime, Spring Data REST will create an implementation of this interface automatically. Then it will use the <a href="https://docs.spring.io/spring-data/rest/docs/current/api/org/springframework/data/rest/core/annotation/RepositoryRestResource.html">@RepositoryRestResource</a> annotation to direct Spring MVC to create RESTful endpoints at <code>/people</code>.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tbody>
+<tr>
+<td class="icon"> <i class="fa icon-note" title="Note"></i> </td>
+<td class="content"> <code>@RepositoryRestResource</code> is not required for a repository to be exported. It is only used to change the export details, such as using <code>/people</code> instead of the default value of <code>/persons</code>. </td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="paragraph">
+<p>Here you have also defined a custom query to retrieve a list of <code>Person</code> objects based on the lastName. You’ll see how to invoke it further down in this guide.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_make_the_application_executable">Make the application executable</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Although it is possible to package this service as a traditional <a href="https://spring.io/understanding/WAR">WAR</a>
+ file for deployment to an external application server, the simpler 
+approach demonstrated below creates a standalone application. You 
+package everything in a single, executable JAR file, driven by a good 
+old Java <code>main()</code> method. Along the way, you use Spring’s support for embedding the <a href="https://spring.io/understanding/Tomcat">Tomcat</a> servlet container as the HTTP runtime, instead of deploying to an external instance.</p>
+</div>
+<div class="paragraph">
+<p><code>src/main/java/hello/Application.java</code></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<button class="copy-button snippet" id="copy-button-4" data-clipboard-target="#code-block-4"></button><pre class="prettyprint highlight" id="code-block-4"><code class="language-java" data-lang="java"><span class="kwd">package</span><span class="pln"> hello</span><span class="pun">;</span><span class="pln">
+
+</span><span class="kwd">import</span><span class="pln"> org</span><span class="pun">.</span><span class="pln">springframework</span><span class="pun">.</span><span class="pln">boot</span><span class="pun">.</span><span class="typ">SpringApplication</span><span class="pun">;</span><span class="pln">
+</span><span class="kwd">import</span><span class="pln"> org</span><span class="pun">.</span><span class="pln">springframework</span><span class="pun">.</span><span class="pln">boot</span><span class="pun">.</span><span class="pln">autoconfigure</span><span class="pun">.</span><span class="typ">SpringBootApplication</span><span class="pun">;</span><span class="pln">
+
+</span><span class="lit">@SpringBootApplication</span><span class="pln">
+</span><span class="kwd">public</span><span class="pln"> </span><span class="kwd">class</span><span class="pln"> </span><span class="typ">Application</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+
+	</span><span class="kwd">public</span><span class="pln"> </span><span class="kwd">static</span><span class="pln"> </span><span class="kwd">void</span><span class="pln"> main</span><span class="pun">(</span><span class="typ">String</span><span class="pun">[]</span><span class="pln"> args</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+		</span><span class="typ">SpringApplication</span><span class="pun">.</span><span class="pln">run</span><span class="pun">(</span><span class="typ">Application</span><span class="pun">.</span><span class="kwd">class</span><span class="pun">,</span><span class="pln"> args</span><span class="pun">);</span><span class="pln">
+	</span><span class="pun">}</span><span class="pln">
+</span><span class="pun">}</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><code>@SpringBootApplication</code> is a convenience annotation that adds all of the following:</p>
+</div>
+<div class="ulist">
+<ul>
+<li> <p><code>@Configuration</code> tags the class as a source of bean definitions for the application context.</p> </li>
+<li> <p><code>@EnableAutoConfiguration</code> tells Spring Boot to start adding beans based on classpath settings, other beans, and various property settings.</p> </li>
+<li> <p>Normally you would add <code>@EnableWebMvc</code> for a Spring MVC app, but Spring Boot adds it automatically when it sees <strong>spring-webmvc</strong> on the classpath. This flags the application as a web application and activates key behaviors such as setting up a <code>DispatcherServlet</code>.</p> </li>
+<li> <p><code>@ComponentScan</code> tells Spring to look for other components, configurations, and services in the <code>hello</code> package, allowing it to find the controllers.</p> </li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The <code>main()</code> method uses Spring Boot’s <code>SpringApplication.run()</code> method to launch an application. Did you notice that there wasn’t a single line of XML? No <strong>web.xml</strong>
+ file either. This web application is 100% pure Java and you didn’t have
+ to deal with configuring any plumbing or infrastructure.</p>
+</div>
+<div class="paragraph">
+<p>Spring Boot automatically spins up Spring Data JPA to create a concrete implementation of the <code>PersonRepository</code> and configure it to talk to a back end in-memory database using JPA.</p>
+</div>
+<div class="paragraph">
+<p>Spring Data REST builds on top of Spring MVC. It creates a collection
+ of Spring MVC controllers, JSON converters, and other beans needed to 
+provide a RESTful front end. These components link up to the Spring Data
+ JPA backend. Using Spring Boot this is all autoconfigured; if you want 
+to investigate how that works, you could start by looking at the <code>RepositoryRestMvcConfiguration</code> in Spring Data REST.</p>
+</div>
+<div class="sect2">
+<h3 id="_build_an_executable_jar">Build an executable JAR</h3>
+<div class="paragraph">
+<p>You can run the application from the command line with Gradle or 
+Maven. Or you can build a single executable JAR file that contains all 
+the necessary dependencies, classes, and resources, and run that. This 
+makes it easy to ship, version, and deploy the service as an application
+ throughout the development lifecycle, across different environments, 
+and so forth.</p>
+</div>
+<div class="paragraph">
+<p>If you are using Gradle, you can run the application using <code>./gradlew bootRun</code>. Or you can build the JAR file using <code>./gradlew build</code>. Then you can run the JAR file:</p>
+</div>
+<div class="literalblock has-copy-button">
+<div class="content">
+<button class="copy-button snippet" id="copy-button-5" data-clipboard-target="#code-block-5"></button><pre id="code-block-5" class="prettyprint">java -jar build/libs/gs-accessing-data-rest-0.1.0.jar</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If you are using Maven, you can run the application using <code>./mvnw spring-boot:run</code>. Or you can build the JAR file with <code>./mvnw clean package</code>. Then you can run the JAR file:</p>
+</div>
+<div class="literalblock has-copy-button">
+<div class="content">
+<button class="copy-button snippet" id="copy-button-6" data-clipboard-target="#code-block-6"></button><pre id="code-block-6" class="prettyprint">java -jar target/gs-accessing-data-rest-0.1.0.jar</pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tbody>
+<tr>
+<td class="icon"> <i class="fa icon-note" title="Note"></i> </td>
+<td class="content"> The procedure above will create a runnable JAR. You can also opt to <a href="https://spring.io/guides/gs/convert-jar-to-war/">build a classic WAR file</a> instead. </td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="paragraph">
+<p>Logging output is displayed. The service should be up and running within a few seconds.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_test_the_application">Test the application</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Now that the application is running, you can test it. You can use any
+ REST client you wish. The following examples use the *nix tool <code>curl</code>.</p>
+</div>
+<div class="paragraph">
+<p>First you want to see the top level service.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<button class="copy-button snippet" id="copy-button-7" data-clipboard-target="#code-block-7"></button><pre class="prettyprint highlight" id="code-block-7"><code><span class="pln">$ curl http</span><span class="pun">:</span><span class="com">//localhost:8080</span><span class="pln">
+</span><span class="pun">{</span><span class="pln">
+  </span><span class="str">"_links"</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    </span><span class="str">"people"</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+      </span><span class="str">"href"</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="str">"http://localhost:8080/people{?page,size,sort}"</span><span class="pun">,</span><span class="pln">
+      </span><span class="str">"templated"</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="kwd">true</span><span class="pln">
+    </span><span class="pun">}</span><span class="pln">
+  </span><span class="pun">}</span><span class="pln">
+</span><span class="pun">}</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Here you get a first glimpse of what this server has to offer. There is a <strong>people</strong> link located at <a href="http://localhost:8080/people" class="bare">http://localhost:8080/people</a>. It has some options such as <code>?page</code>, <code>?size</code>, and <code>?sort</code>.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tbody>
+<tr>
+<td class="icon"> <i class="fa icon-note" title="Note"></i> </td>
+<td class="content"> Spring Data REST uses the <a href="http://stateless.co/hal_specification.html">HAL format</a> for JSON output. It is flexible and offers a convenient way to supply links adjacent to the data that is served. </td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="listingblock">
+<div class="content">
+<button class="copy-button snippet" id="copy-button-8" data-clipboard-target="#code-block-8"></button><pre class="prettyprint highlight" id="code-block-8"><code><span class="pln">$ curl http</span><span class="pun">:</span><span class="com">//localhost:8080/people</span><span class="pln">
+</span><span class="pun">{</span><span class="pln">
+  </span><span class="str">"_links"</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    </span><span class="str">"self"</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+      </span><span class="str">"href"</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="str">"http://localhost:8080/people{?page,size,sort}"</span><span class="pun">,</span><span class="pln">
+      </span><span class="str">"templated"</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="kwd">true</span><span class="pln">
+    </span><span class="pun">},</span><span class="pln">
+    </span><span class="str">"search"</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+      </span><span class="str">"href"</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="str">"http://localhost:8080/people/search"</span><span class="pln">
+    </span><span class="pun">}</span><span class="pln">
+  </span><span class="pun">},</span><span class="pln">
+  </span><span class="str">"page"</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    </span><span class="str">"size"</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="lit">20</span><span class="pun">,</span><span class="pln">
+    </span><span class="str">"totalElements"</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="lit">0</span><span class="pun">,</span><span class="pln">
+    </span><span class="str">"totalPages"</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="lit">0</span><span class="pun">,</span><span class="pln">
+    </span><span class="str">"number"</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="lit">0</span><span class="pln">
+  </span><span class="pun">}</span><span class="pln">
+</span><span class="pun">}</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>There are currently no elements and hence no pages. Time to create a new <code>Person</code>!</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<button class="copy-button snippet" id="copy-button-9" data-clipboard-target="#code-block-9"></button><pre class="prettyprint highlight" id="code-block-9"><code><span class="pln">$ curl </span><span class="pun">-</span><span class="pln">i </span><span class="pun">-</span><span class="pln">X POST </span><span class="pun">-</span><span class="pln">H </span><span class="str">"Content-Type:application/json"</span><span class="pln"> </span><span class="pun">-</span><span class="pln">d </span><span class="str">"{  \"firstName\" : \"Frodo\",  \"lastName\" : \"Baggins\" }"</span><span class="pln"> http</span><span class="pun">:</span><span class="com">//localhost:8080/people</span><span class="pln">
+HTTP</span><span class="pun">/</span><span class="lit">1.1</span><span class="pln"> </span><span class="lit">201</span><span class="pln"> </span><span class="typ">Created</span><span class="pln">
+</span><span class="typ">Server</span><span class="pun">:</span><span class="pln"> </span><span class="typ">Apache</span><span class="pun">-</span><span class="typ">Coyote</span><span class="pun">/</span><span class="lit">1.1</span><span class="pln">
+</span><span class="typ">Location</span><span class="pun">:</span><span class="pln"> http</span><span class="pun">:</span><span class="com">//localhost:8080/people/1</span><span class="pln">
+</span><span class="typ">Content</span><span class="pun">-</span><span class="typ">Length</span><span class="pun">:</span><span class="pln"> </span><span class="lit">0</span><span class="pln">
+</span><span class="typ">Date</span><span class="pun">:</span><span class="pln"> </span><span class="typ">Wed</span><span class="pun">,</span><span class="pln"> </span><span class="lit">26</span><span class="pln"> </span><span class="typ">Feb</span><span class="pln"> </span><span class="lit">2014</span><span class="pln"> </span><span class="lit">20</span><span class="pun">:</span><span class="lit">26</span><span class="pun">:</span><span class="lit">55</span><span class="pln"> GMT</span></code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li> <p><code>-i</code> ensures you can see the response message including the headers. The URI of the newly created <code>Person</code> is shown</p> </li>
+<li> <p><code>-X POST</code> signals this a POST used to create a new entry</p> </li>
+<li> <p><code>-H "Content-Type:application/json"</code> sets the content type so the application knows the payload contains a JSON object</p> </li>
+<li> <p><code>-d "{ \"firstName\" : \"Frodo\", \"lastName\" : \"Baggins\" }"</code> is the data being sent. Double quotes inside the data need to be escaped as <code>\"</code>.</p> </li>
+</ul>
+</div>
+<div class="admonitionblock note">
+<table>
+<tbody>
+<tr>
+<td class="icon"> <i class="fa icon-note" title="Note"></i> </td>
+<td class="content"> Notice how the previous <code>POST</code> operation includes a <code>Location</code> header. This contains the URI of the newly created resource. Spring Data REST also has two methods on <code>RepositoryRestConfiguration.setReturnBodyOnCreate(…)</code> and <code>setReturnBodyOnUpdate(…)</code> which you can use to configure the framework to immediately return the representation of the resource just created. <code>RepositoryRestConfiguration.setReturnBodyForPutAndPost(…)</code> is a short cut method to enable representation responses for creates and updates. </td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="paragraph">
+<p>From this you can query for all people:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<button class="copy-button snippet" id="copy-button-10" data-clipboard-target="#code-block-10"></button><pre class="prettyprint highlight" id="code-block-10"><code><span class="pln">$ curl http</span><span class="pun">:</span><span class="com">//localhost:8080/people</span><span class="pln">
+</span><span class="pun">{</span><span class="pln">
+  </span><span class="str">"_links"</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    </span><span class="str">"self"</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+      </span><span class="str">"href"</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="str">"http://localhost:8080/people{?page,size,sort}"</span><span class="pun">,</span><span class="pln">
+      </span><span class="str">"templated"</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="kwd">true</span><span class="pln">
+    </span><span class="pun">},</span><span class="pln">
+    </span><span class="str">"search"</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+      </span><span class="str">"href"</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="str">"http://localhost:8080/people/search"</span><span class="pln">
+    </span><span class="pun">}</span><span class="pln">
+  </span><span class="pun">},</span><span class="pln">
+  </span><span class="str">"_embedded"</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    </span><span class="str">"persons"</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="pun">[</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+      </span><span class="str">"firstName"</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="str">"Frodo"</span><span class="pun">,</span><span class="pln">
+      </span><span class="str">"lastName"</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="str">"Baggins"</span><span class="pun">,</span><span class="pln">
+      </span><span class="str">"_links"</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+        </span><span class="str">"self"</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+          </span><span class="str">"href"</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="str">"http://localhost:8080/people/1"</span><span class="pln">
+        </span><span class="pun">}</span><span class="pln">
+      </span><span class="pun">}</span><span class="pln">
+    </span><span class="pun">}</span><span class="pln"> </span><span class="pun">]</span><span class="pln">
+  </span><span class="pun">},</span><span class="pln">
+  </span><span class="str">"page"</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    </span><span class="str">"size"</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="lit">20</span><span class="pun">,</span><span class="pln">
+    </span><span class="str">"totalElements"</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="lit">1</span><span class="pun">,</span><span class="pln">
+    </span><span class="str">"totalPages"</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="lit">1</span><span class="pun">,</span><span class="pln">
+    </span><span class="str">"number"</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="lit">0</span><span class="pln">
+  </span><span class="pun">}</span><span class="pln">
+</span><span class="pun">}</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The <strong>persons</strong> object contains a list with Frodo. Notice how it includes a <strong>self</strong> link. Spring Data REST also uses <a href="http://www.atteo.org/2011/12/12/Evo-Inflector.html">Evo Inflector</a> to pluralize the name of the entity for groupings.</p>
+</div>
+<div class="paragraph">
+<p>You can query directly for the individual record:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<button class="copy-button snippet" id="copy-button-11" data-clipboard-target="#code-block-11"></button><pre class="prettyprint highlight" id="code-block-11"><code><span class="pln">$ curl http</span><span class="pun">:</span><span class="com">//localhost:8080/people/1</span><span class="pln">
+</span><span class="pun">{</span><span class="pln">
+  </span><span class="str">"firstName"</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="str">"Frodo"</span><span class="pun">,</span><span class="pln">
+  </span><span class="str">"lastName"</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="str">"Baggins"</span><span class="pun">,</span><span class="pln">
+  </span><span class="str">"_links"</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    </span><span class="str">"self"</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+      </span><span class="str">"href"</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="str">"http://localhost:8080/people/1"</span><span class="pln">
+    </span><span class="pun">}</span><span class="pln">
+  </span><span class="pun">}</span><span class="pln">
+</span><span class="pun">}</span></code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tbody>
+<tr>
+<td class="icon"> <i class="fa icon-note" title="Note"></i> </td>
+<td class="content"> This might appear to be purely web based, but 
+behind the scenes, there is an H2 relational database. In production, 
+you would probably use a real one, like PostgreSQL. </td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="paragraph">
+<p>In this guide, there is only one domain object. With a more complex 
+system where domain objects are related to each other, Spring Data REST 
+will render additional links to help navigate to connected records.</p>
+</div>
+<div class="paragraph">
+<p>Find all the custom queries:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<button class="copy-button snippet" id="copy-button-12" data-clipboard-target="#code-block-12"></button><pre class="prettyprint highlight" id="code-block-12"><code><span class="pln">$ curl http</span><span class="pun">:</span><span class="com">//localhost:8080/people/search</span><span class="pln">
+</span><span class="pun">{</span><span class="pln">
+  </span><span class="str">"_links"</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    </span><span class="str">"findByLastName"</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+      </span><span class="str">"href"</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="str">"http://localhost:8080/people/search/findByLastName{?name}"</span><span class="pun">,</span><span class="pln">
+      </span><span class="str">"templated"</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="kwd">true</span><span class="pln">
+    </span><span class="pun">}</span><span class="pln">
+  </span><span class="pun">}</span><span class="pln">
+</span><span class="pun">}</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You can see the URL for the query including the HTTP query parameter <code>name</code>. If you’ll notice, this matches the <code>@Param("name")</code> annotation embedded in the interface.</p>
+</div>
+<div class="paragraph">
+<p>To use the <code>findByLastName</code> query, do this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<button class="copy-button snippet" id="copy-button-13" data-clipboard-target="#code-block-13"></button><pre class="prettyprint highlight" id="code-block-13"><code><span class="pln">$ curl http</span><span class="pun">:</span><span class="com">//localhost:8080/people/search/findByLastName?name=Baggins</span><span class="pln">
+</span><span class="pun">{</span><span class="pln">
+  </span><span class="str">"_embedded"</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    </span><span class="str">"persons"</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="pun">[</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+      </span><span class="str">"firstName"</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="str">"Frodo"</span><span class="pun">,</span><span class="pln">
+      </span><span class="str">"lastName"</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="str">"Baggins"</span><span class="pun">,</span><span class="pln">
+      </span><span class="str">"_links"</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+        </span><span class="str">"self"</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+          </span><span class="str">"href"</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="str">"http://localhost:8080/people/1"</span><span class="pln">
+        </span><span class="pun">}</span><span class="pln">
+      </span><span class="pun">}</span><span class="pln">
+    </span><span class="pun">}</span><span class="pln"> </span><span class="pun">]</span><span class="pln">
+  </span><span class="pun">}</span><span class="pln">
+</span><span class="pun">}</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Because you defined it to return <code>List&lt;Person&gt;</code> in the code, it will return all of the results. If you had defined it only return <code>Person</code>,
+ it will pick one of the Person objects to return. Since this can be 
+unpredictable, you probably don’t want to do that for queries that can 
+return multiple entries.</p>
+</div>
+<div class="paragraph">
+<p>You can also issue <code>PUT</code>, <code>PATCH</code>, and <code>DELETE</code> REST calls to either replace, update, or delete existing records.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<button class="copy-button snippet" id="copy-button-14" data-clipboard-target="#code-block-14"></button><pre class="prettyprint highlight" id="code-block-14"><code><span class="pln">$ curl </span><span class="pun">-</span><span class="pln">X PUT </span><span class="pun">-</span><span class="pln">H </span><span class="str">"Content-Type:application/json"</span><span class="pln"> </span><span class="pun">-</span><span class="pln">d </span><span class="str">"{ \"firstName\": \"Bilbo\", \"lastName\": \"Baggins\" }"</span><span class="pln"> http</span><span class="pun">:</span><span class="com">//localhost:8080/people/1</span><span class="pln">
+$ curl http</span><span class="pun">:</span><span class="com">//localhost:8080/people/1</span><span class="pln">
+</span><span class="pun">{</span><span class="pln">
+  </span><span class="str">"firstName"</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="str">"Bilbo"</span><span class="pun">,</span><span class="pln">
+  </span><span class="str">"lastName"</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="str">"Baggins"</span><span class="pun">,</span><span class="pln">
+  </span><span class="str">"_links"</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    </span><span class="str">"self"</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+      </span><span class="str">"href"</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="str">"http://localhost:8080/people/1"</span><span class="pln">
+    </span><span class="pun">}</span><span class="pln">
+  </span><span class="pun">}</span><span class="pln">
+</span><span class="pun">}</span></code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<button class="copy-button snippet" id="copy-button-15" data-clipboard-target="#code-block-15"></button><pre class="prettyprint highlight" id="code-block-15"><code><span class="pln">$ curl </span><span class="pun">-</span><span class="pln">X PATCH </span><span class="pun">-</span><span class="pln">H </span><span class="str">"Content-Type:application/json"</span><span class="pln"> </span><span class="pun">-</span><span class="pln">d </span><span class="str">"{ \"firstName\": \"Bilbo Jr.\" }"</span><span class="pln"> http</span><span class="pun">:</span><span class="com">//localhost:8080/people/1</span><span class="pln">
+$ curl http</span><span class="pun">:</span><span class="com">//localhost:8080/people/1</span><span class="pln">
+</span><span class="pun">{</span><span class="pln">
+  </span><span class="str">"firstName"</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="str">"Bilbo Jr."</span><span class="pun">,</span><span class="pln">
+  </span><span class="str">"lastName"</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="str">"Baggins"</span><span class="pun">,</span><span class="pln">
+  </span><span class="str">"_links"</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    </span><span class="str">"self"</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+      </span><span class="str">"href"</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="str">"http://localhost:8080/people/1"</span><span class="pln">
+    </span><span class="pun">}</span><span class="pln">
+  </span><span class="pun">}</span><span class="pln">
+</span><span class="pun">}</span></code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tbody>
+<tr>
+<td class="icon"> <i class="fa icon-note" title="Note"></i> </td>
+<td class="content"> PUT replaces an entire record. Fields not supplied will be replaced with null. PATCH can be used to update a subset of items. </td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="paragraph">
+<p>You can delete records:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<button class="copy-button snippet" id="copy-button-16" data-clipboard-target="#code-block-16"></button><pre class="prettyprint highlight" id="code-block-16"><code><span class="pln">$ curl </span><span class="pun">-</span><span class="pln">X DELETE http</span><span class="pun">:</span><span class="com">//localhost:8080/people/1</span><span class="pln">
+$ curl http</span><span class="pun">:</span><span class="com">//localhost:8080/people</span><span class="pln">
+</span><span class="pun">{</span><span class="pln">
+  </span><span class="str">"_links"</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    </span><span class="str">"self"</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+      </span><span class="str">"href"</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="str">"http://localhost:8080/people{?page,size,sort}"</span><span class="pun">,</span><span class="pln">
+      </span><span class="str">"templated"</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="kwd">true</span><span class="pln">
+    </span><span class="pun">},</span><span class="pln">
+    </span><span class="str">"search"</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+      </span><span class="str">"href"</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="str">"http://localhost:8080/people/search"</span><span class="pln">
+    </span><span class="pun">}</span><span class="pln">
+  </span><span class="pun">},</span><span class="pln">
+  </span><span class="str">"page"</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    </span><span class="str">"size"</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="lit">20</span><span class="pun">,</span><span class="pln">
+    </span><span class="str">"totalElements"</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="lit">0</span><span class="pun">,</span><span class="pln">
+    </span><span class="str">"totalPages"</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="lit">0</span><span class="pun">,</span><span class="pln">
+    </span><span class="str">"number"</span><span class="pln"> </span><span class="pun">:</span><span class="pln"> </span><span class="lit">0</span><span class="pln">
+  </span><span class="pun">}</span><span class="pln">
+</span><span class="pun">}</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>A very convenient aspect of this <a href="https://spring.io/understanding/HATEOAS">hypermedia-driven interface</a>
+ is how you can discover all the RESTful endpoints using curl (or 
+whatever REST client you are using). There is no need to exchange a 
+formal contract or interface document with your customers.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_summary">Summary</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Congratulations! You’ve just developed an application with a <a href="https://spring.io/guides/gs/rest-hateoas">hypermedia-based</a> <a href="https://spring.io/understanding/REST">RESTful</a> front end and a JPA-based back end.</p>
+</div>
+<div class="paragraph">
+<p>Want to write a new guide or contribute to an existing one? Check out our <a href="https://github.com/spring-guides/getting-started-guides/wiki">contribution guidelines</a>.</p>
+</div>
+<div class="admonitionblock important">
+<table>
+<tbody>
+<tr>
+<td class="icon"> <i class="fa icon-important" title="Important"></i> </td>
+<td class="content"> All guides are released with an ASLv2 license for the code, and an <a href="https://creativecommons.org/licenses/by-nd/3.0/">Attribution, NoDerivatives creative commons license</a> for the writing. </td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div></div>
+</article>
+</div>
+<aside class="span4 content-right-pane--container mobile-left-pane" id="sidebar">
+<a class="ci-status desktop-only" href="https://travis-ci.org/spring-guides/gs-accessing-data-rest">
+<img src="Getting%20Started%20%C2%B7%20Accessing%20JPA%20Data%20with%20REST_files/gs-accessing-data-rest.svg">
+</a>
+<div class="right-pane-widget--container desktop-only">
+<div class="github-actions https">
+<h2>Get the Code</h2>
+<div class="btn-group">
+<button class="btn" data-protocol="https">HTTPS</button>
+<button class="btn" data-protocol="ssh">SSH</button>
+<button class="btn" data-protocol="subversion">Subversion</button>
+</div>
+<div class="clone-url https">
+<input id="clone-url-https" readonly="readonly" value="https://github.com/spring-guides/gs-accessing-data-rest.git" type="text">
+<button class="copy-button github" data-toggle="tooltip" data-clipboard-text="https://github.com/spring-guides/gs-accessing-data-rest.git"></button>
+</div>
+<div class="clone-url ssh">
+<input id="clone-url-ssh" readonly="readonly" value="git@github.com:spring-guides/gs-accessing-data-rest.git" type="text">
+<button class="copy-button github" data-toggle="tooltip" data-clipboard-text="git@github.com:spring-guides/gs-accessing-data-rest.git"></button>
+</div>
+<div class="clone-url subversion">
+<input id="clone-url-subversion" readonly="readonly" value="https://github.com/spring-guides/gs-accessing-data-rest" type="text">
+<button class="copy-button github" data-toggle="tooltip" data-clipboard-text="https://github.com/spring-guides/gs-accessing-data-rest"></button>
+</div>
+<a class="github_download btn btn-black uppercase" href="https://github.com/spring-guides/gs-accessing-data-rest/archive/master.zip">Download ZIP</a>
+<a class="gs-guide-import" href="https://github.com/spring-guides/gs-accessing-data-rest">Import into STS</a>
+<div class="go-to-repo--container">
+<a href="https://github.com/spring-guides/gs-accessing-data-rest">
+<i class="icon-github"></i>
+Go To Repo
+</a>
+</div>
+</div>
+</div>
+<div class="right-pane-widget--container">
+<div>
+<h3><a class="anchor" href="#table-of-contents" name="table-of-contents"></a>Table of contents</h3>
+<div><ul class="sectlevel1">
+<li><a href="#_what_you_ll_build">What you’ll build</a></li>
+<li><a href="#_what_you_ll_need">What you’ll need</a></li>
+<li><a href="#_how_to_complete_this_guide">How to complete this guide</a></li>
+<li><a href="#scratch">Build with Gradle</a> </li>
+<li><a href="#use-maven">Build with Maven</a> </li>
+<li><a href="#use-sts">Build with your IDE</a></li>
+<li><a href="#initial">Create a domain object</a></li>
+<li><a href="#_create_a_person_repository">Create a Person repository</a></li>
+<li><a href="#_make_the_application_executable">Make the application executable</a> </li>
+<li><a href="#_test_the_application">Test the application</a></li>
+<li><a href="#_summary">Summary</a></li>
+</ul></div>
+</div>
+</div>
+</aside>
+</div>
+</main>
+</div>
+<footer class="footer">
+<div class="container-fluid">
+<div class="row-fluid">
+<div class="span12">
+<div class="navbar">
+<div class="container">
+<ul class="nav">
+<li><a href="https://spring.io/team">Team</a></li>
+<li><a href="https://spring.io/services">Services</a></li>
+<li><a href="https://spring.io/tools">Tools</a></li>
+<li><a href="https://store.spring.io/">Store</a></li>
+</ul>
+</div>
+</div>
+© <span>2018</span> <a href="https://www.pivotal.io/">Pivotal Software</a>, Inc. All Rights Reserved.
+<a href="https://www.pivotal.io/terms-of-use">Terms of Use</a>,
+<a href="https://www.pivotal.io/privacy-policy">Privacy</a> and
+<a href="https://spring.io/trademarks">Trademark Guidelines</a>
+</div>
+</div>
+</div>
+</footer>
+<div id="scrim"></div>
+</div>
+</body></html>
